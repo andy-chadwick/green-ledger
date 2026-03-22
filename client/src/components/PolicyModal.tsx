@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronUp, ChevronDown as ChevronDownIcon, AlertTriangle, CheckCircle, MessageSquare, Gavel, Share2, Check } from 'lucide-react';
 import { Policy, riskColors, riskLabels, categoryColors } from '@/lib/policyData';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface PolicyModalProps {
   policy: Policy | null;
@@ -81,6 +81,14 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
   const [activeTab, setActiveTab] = useState('promise');
   const [copied, setCopied] = useState(false);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (policy) {
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = ''; };
+    }
+  }, [policy]);
+
   if (!policy) return null;
 
   const handleShare = async () => {
@@ -104,7 +112,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+        className="fixed inset-0 z-50 flex items-stretch sm:items-center justify-center p-0 sm:p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -120,7 +128,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
 
         {/* Modal */}
         <motion.div
-          className="relative w-full sm:max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-xl flex flex-col"
+          className="relative w-full h-full sm:h-auto sm:max-w-4xl sm:max-h-[90vh] overflow-hidden rounded-none sm:rounded-xl flex flex-col"
           style={{ background: '#121418', border: '1px solid rgba(255,255,255,0.08)' }}
           initial={{ y: '100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
