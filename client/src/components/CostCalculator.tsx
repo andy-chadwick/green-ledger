@@ -164,7 +164,7 @@ export default function CostCalculator() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{ background: CALC_PANEL_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW, overflow: 'hidden' }}
           >
-            <div className="max-w-5xl mx-auto px-4 py-5 max-h-[60vh] sm:max-h-[70vh] overflow-y-auto">
+            <div className="max-w-5xl mx-auto px-4 py-5 max-h-[60vh] sm:max-h-none overflow-y-auto sm:overflow-y-visible">
               <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <p className="text-sm text-white/75">
                   <span className="font-semibold">How to use:</span> 1) Choose a scenario, 2) toggle policies on/off, 3) compare net annual fiscal and social impacts.
@@ -269,7 +269,7 @@ export default function CostCalculator() {
                   <div className="text-xs text-white/60 mb-2">
                     Showing {filteredPolicies.length} of {policies.length} policies
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-64 overflow-y-auto pr-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:max-h-64 sm:overflow-y-auto sm:pr-1">
                     {filteredPolicies.map((policy) => {
                       const isOn = enabled[policy.id];
                       const fiscalVal = scenario === 'best' ? policy.bestCaseGBP : policy.worstCaseGBP;
