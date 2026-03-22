@@ -128,7 +128,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
 
         {/* Modal */}
         <motion.div
-          className="relative w-full h-full sm:h-auto sm:max-w-4xl sm:max-h-[90vh] overflow-hidden rounded-none sm:rounded-xl flex flex-col"
+          className="relative w-full h-full sm:h-auto sm:max-w-4xl sm:max-h-[90vh] overflow-y-auto sm:overflow-hidden rounded-none sm:rounded-xl sm:flex sm:flex-col"
           style={{ background: '#121418', border: '1px solid rgba(255,255,255,0.08)' }}
           initial={{ y: '100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -216,7 +216,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
+          <div className="sm:flex-1 sm:overflow-y-auto px-4 py-4 sm:px-6 sm:py-5 pb-20 sm:pb-5">
             <AnimatePresence mode="wait">
               {activeTab === 'promise' && (
                 <motion.div
