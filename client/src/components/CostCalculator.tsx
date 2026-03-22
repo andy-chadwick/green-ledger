@@ -56,6 +56,134 @@ function ImpactBar({ value, max = 5, label }: { value: number; max?: number; lab
   );
 }
 
+function CalculatorContent({ scenario, setScenario, fiscalColor, fiscalLabel, totalFiscal, totalSecurity, totalInequality, totalServices, isNuclearEnabled, setAllPolicies, resetDefaults, searchTerm, setSearchTerm, filteredPolicies, enabled, togglePolicy, formatGBP }: any) {
+  return (
+    <>
+      <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <p className="text-sm text-white/75">
+          <span className="font-semibold">How to use:</span> 1) Choose a scenario, 2) toggle policies on/off, 3) compare net annual fiscal and social impacts.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left: Totals */}
+        <div className="lg:col-span-1">
+          <div className="flex items-center gap-2 mb-4">
+            <button
+              onClick={() => setScenario('best')}
+              className="flex-1 py-1.5 text-xs font-mono rounded transition-all"
+              style={{
+                background: scenario === 'best' ? 'rgba(34,197,94,0.15)' : 'transparent',
+                color: scenario === 'best' ? '#22c55e' : 'rgba(255,255,255,0.3)',
+                border: scenario === 'best' ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(255,255,255,0.08)',
+              }}
+            >
+              Best Case
+            </button>
+            <button
+              onClick={() => setScenario('worst')}
+              className="flex-1 py-1.5 text-xs font-mono rounded transition-all"
+              style={{
+                background: scenario === 'worst' ? 'rgba(239,68,68,0.15)' : 'transparent',
+                color: scenario === 'worst' ? '#ef4444' : 'rgba(255,255,255,0.3)',
+                border: scenario === 'worst' ? '1px solid rgba(239,68,68,0.3)' : '1px solid rgba(255,255,255,0.08)',
+              }}
+            >
+              Worst Case
+            </button>
+          </div>
+
+          <div className="p-4 rounded-lg mb-4" style={{ background: `${fiscalColor}10`, border: `1px solid ${fiscalColor}20` }}>
+            <div className="text-xs font-tech text-white/65 mb-1">{fiscalLabel}</div>
+            <div className="font-mono font-bold text-2xl sm:text-3xl" style={{ color: fiscalColor }}>
+              {totalFiscal >= 0 ? '+' : ''}{formatGBP(totalFiscal)}
+            </div>
+            <div className="text-sm text-white/55 mt-1">per year vs. current spending</div>
+          </div>
+
+          <div className="space-y-2.5">
+            <div className="text-xs font-tech text-white/55 mb-2">Social Impact</div>
+            <ImpactBar value={totalSecurity} label="Security" />
+            <ImpactBar value={totalInequality} label="Inequality" />
+            <ImpactBar value={totalServices} label="Services" />
+          </div>
+
+          {!isNuclearEnabled && (
+            <div className="mt-4 p-3 rounded-lg" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)' }}>
+              <div className="flex items-center gap-2 mb-1">
+                <AlertTriangle size={12} style={{ color: '#ef4444' }} />
+                <span className="text-xs font-mono font-bold" style={{ color: '#ef4444' }}>Nuclear Deterrent Removed</span>
+              </div>
+              <p className="text-xs text-white/50 leading-relaxed">
+                UK loses permanent seat at NATO nuclear planning. Ukraine gave up its nuclear arsenal in 1994. Russia invaded in 2022.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Right: Policy toggles */}
+        <div className="lg:col-span-2">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <div className="text-xs font-tech text-white/55">Toggle Policies</div>
+            <button onClick={() => setAllPolicies(true)} className="px-2 py-1 rounded text-xs font-tech transition-colors" style={{ background: 'rgba(34,197,94,0.15)', color: '#22c55e' }}>Select all</button>
+            <button onClick={() => setAllPolicies(false)} className="px-2 py-1 rounded text-xs font-tech transition-colors" style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}>Clear all</button>
+            <button onClick={resetDefaults} className="px-2 py-1 rounded text-xs font-tech transition-colors" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.8)' }}>Reset defaults</button>
+          </div>
+
+          <input
+            value={searchTerm}
+            onChange={(event: any) => setSearchTerm(event.target.value)}
+            placeholder="Search policies..."
+            className="w-full mb-3 px-3 py-2 rounded-lg text-sm text-white placeholder:text-white/35 bg-white/5 border border-white/10 focus:outline-none focus:border-white/25"
+          />
+
+          <div className="text-xs text-white/60 mb-2">
+            Showing {filteredPolicies.length} of {policies.length} policies
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:max-h-64 sm:overflow-y-auto sm:pr-1">
+            {filteredPolicies.map((policy: any) => {
+              const isOn = enabled[policy.id];
+              const fiscalVal = scenario === 'best' ? policy.bestCaseGBP : policy.worstCaseGBP;
+              const fiscalColor2 = fiscalVal >= 0 ? '#22c55e' : '#ef4444';
+              return (
+                <button
+                  key={policy.id}
+                  onClick={() => togglePolicy(policy.id)}
+                  className="flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all"
+                  style={{
+                    background: isOn ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
+                    border: isOn ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(255,255,255,0.04)',
+                    opacity: isOn ? 1 : 0.5,
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">{policy.icon}</span>
+                    <span className="text-sm text-white/80 truncate max-w-[170px]">{policy.title}</span>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className="text-sm font-mono" style={{ color: fiscalColor2 }}>
+                      {fiscalVal >= 0 ? '+' : ''}{formatGBP(fiscalVal)}
+                    </span>
+                    {isOn
+                      ? <ToggleRight size={16} style={{ color: '#22c55e' }} />
+                      : <ToggleLeft size={16} style={{ color: 'rgba(255,255,255,0.2)' }} />
+                    }
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          {filteredPolicies.length === 0 && (
+            <div className="text-sm text-white/45 mt-3">
+              No policies match your search.
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function CostCalculator() {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
@@ -154,169 +282,55 @@ export default function CostCalculator() {
         </div>
       </div>
 
-      {/* Expanded panel */}
+      {/* Mobile full-screen overlay */}
+      {isOpen && (
+        <div
+          className="sm:hidden fixed inset-0 z-40 overflow-y-auto"
+          style={{ background: CALC_PANEL_BG }}
+        >
+          <div className="sticky top-0 z-10 flex items-center justify-between px-4 py-3" style={{ background: CALC_PANEL_BG, borderBottom: `1px solid ${CALC_BORDER}` }}>
+            <span className="text-sm font-tech text-white/75">Policy Cost Calculator</span>
+            <button onClick={() => setIsOpen(false)} className="text-xs font-tech px-3 py-1.5 rounded" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' }}>
+              Done
+            </button>
+          </div>
+          <div className="px-4 py-5 pb-24">
+            <CalculatorContent
+              scenario={scenario} setScenario={setScenario}
+              fiscalColor={fiscalColor} fiscalLabel={fiscalLabel} totalFiscal={totalFiscal}
+              totalSecurity={totalSecurity} totalInequality={totalInequality} totalServices={totalServices}
+              isNuclearEnabled={isNuclearEnabled}
+              setAllPolicies={setAllPolicies} resetDefaults={resetDefaults}
+              searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+              filteredPolicies={filteredPolicies} enabled={enabled} togglePolicy={togglePolicy}
+              formatGBP={formatGBP}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Desktop animated drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            className="hidden sm:block"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed sm:relative inset-0 sm:inset-auto bottom-0 left-0 right-0 z-40 sm:z-auto overflow-y-auto sm:overflow-visible"
-            style={{ background: CALC_PANEL_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW }}
+            style={{ background: CALC_PANEL_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW, overflow: 'hidden' }}
           >
-            {/* Mobile close bar */}
-            <div className="sm:hidden sticky top-0 z-10 flex items-center justify-between px-4 py-3" style={{ background: CALC_PANEL_BG, borderBottom: `1px solid ${CALC_BORDER}` }}>
-              <span className="text-sm font-tech text-white/75">Policy Cost Calculator</span>
-              <button onClick={() => setIsOpen(false)} className="text-xs font-tech px-3 py-1 rounded" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)' }}>
-                Close
-              </button>
-            </div>
             <div className="max-w-5xl mx-auto px-4 py-5">
-              <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <p className="text-sm text-white/75">
-                  <span className="font-semibold">How to use:</span> 1) Choose a scenario, 2) toggle policies on/off, 3) compare net annual fiscal and social impacts.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                {/* Left: Totals */}
-                <div className="lg:col-span-1">
-                  {/* Scenario toggle */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <button
-                      onClick={() => setScenario('best')}
-                      className="flex-1 py-1.5 text-xs font-mono rounded transition-all"
-                      style={{
-                        background: scenario === 'best' ? 'rgba(34,197,94,0.15)' : 'transparent',
-                        color: scenario === 'best' ? '#22c55e' : 'rgba(255,255,255,0.3)',
-                        border: scenario === 'best' ? '1px solid rgba(34,197,94,0.3)' : '1px solid rgba(255,255,255,0.08)',
-                      }}
-                    >
-                      Best Case
-                    </button>
-                    <button
-                      onClick={() => setScenario('worst')}
-                      className="flex-1 py-1.5 text-xs font-mono rounded transition-all"
-                      style={{
-                        background: scenario === 'worst' ? 'rgba(239,68,68,0.15)' : 'transparent',
-                        color: scenario === 'worst' ? '#ef4444' : 'rgba(255,255,255,0.3)',
-                        border: scenario === 'worst' ? '1px solid rgba(239,68,68,0.3)' : '1px solid rgba(255,255,255,0.08)',
-                      }}
-                    >
-                      Worst Case
-                    </button>
-                  </div>
-
-                  {/* Big fiscal number */}
-                  <div className="p-4 rounded-lg mb-4" style={{ background: `${fiscalColor}10`, border: `1px solid ${fiscalColor}20` }}>
-                    <div className="text-xs font-tech text-white/65 mb-1">{fiscalLabel}</div>
-                    <div className="font-mono font-bold text-3xl" style={{ color: fiscalColor }}>
-                      {totalFiscal >= 0 ? '+' : ''}{formatGBP(totalFiscal)}
-                    </div>
-                    <div className="text-sm text-white/55 mt-1">per year vs. current spending</div>
-                  </div>
-
-                  {/* Social impact bars */}
-                  <div className="space-y-2.5">
-                    <div className="text-xs font-tech text-white/55 mb-2">Social Impact</div>
-                    <ImpactBar value={totalSecurity} label="Security" />
-                    <ImpactBar value={totalInequality} label="Inequality" />
-                    <ImpactBar value={totalServices} label="Services" />
-                  </div>
-
-                  {/* Nuclear warning */}
-                  {!isNuclearEnabled && (
-                    <div className="mt-4 p-3 rounded-lg" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)' }}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <AlertTriangle size={12} style={{ color: '#ef4444' }} />
-                        <span className="text-xs font-mono font-bold" style={{ color: '#ef4444' }}>Nuclear Deterrent Removed</span>
-                      </div>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        UK loses permanent seat at NATO nuclear planning. Ukraine gave up its nuclear arsenal in 1994. Russia invaded in 2022.
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Right: Policy toggles */}
-                <div className="lg:col-span-2">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <div className="text-xs font-tech text-white/55">Toggle Policies</div>
-                    <button
-                      onClick={() => setAllPolicies(true)}
-                      className="px-2 py-1 rounded text-xs font-tech transition-colors"
-                      style={{ background: 'rgba(34,197,94,0.15)', color: '#22c55e' }}
-                    >
-                      Select all
-                    </button>
-                    <button
-                      onClick={() => setAllPolicies(false)}
-                      className="px-2 py-1 rounded text-xs font-tech transition-colors"
-                      style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444' }}
-                    >
-                      Clear all
-                    </button>
-                    <button
-                      onClick={resetDefaults}
-                      className="px-2 py-1 rounded text-xs font-tech transition-colors"
-                      style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.8)' }}
-                    >
-                      Reset defaults
-                    </button>
-                  </div>
-
-                  <input
-                    value={searchTerm}
-                    onChange={(event) => setSearchTerm(event.target.value)}
-                    placeholder="Search policies..."
-                    className="w-full mb-3 px-3 py-2 rounded-lg text-sm text-white placeholder:text-white/35 bg-white/5 border border-white/10 focus:outline-none focus:border-white/25"
-                  />
-
-                  <div className="text-xs text-white/60 mb-2">
-                    Showing {filteredPolicies.length} of {policies.length} policies
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:max-h-64 sm:overflow-y-auto sm:pr-1 pb-20 sm:pb-0">
-                    {filteredPolicies.map((policy) => {
-                      const isOn = enabled[policy.id];
-                      const fiscalVal = scenario === 'best' ? policy.bestCaseGBP : policy.worstCaseGBP;
-                      const fiscalColor2 = fiscalVal >= 0 ? '#22c55e' : '#ef4444';
-                      return (
-                        <button
-                          key={policy.id}
-                          onClick={() => togglePolicy(policy.id)}
-                          className="flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all"
-                          style={{
-                            background: isOn ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
-                            border: isOn ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(255,255,255,0.04)',
-                            opacity: isOn ? 1 : 0.5,
-                          }}
-                        >
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm">{policy.icon}</span>
-                            <span className="text-sm text-white/80 truncate max-w-[170px]">{policy.title}</span>
-                          </div>
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <span className="text-sm font-mono" style={{ color: fiscalColor2 }}>
-                              {fiscalVal >= 0 ? '+' : ''}{formatGBP(fiscalVal)}
-                            </span>
-                            {isOn
-                              ? <ToggleRight size={16} style={{ color: '#22c55e' }} />
-                              : <ToggleLeft size={16} style={{ color: 'rgba(255,255,255,0.2)' }} />
-                            }
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {filteredPolicies.length === 0 && (
-                    <div className="text-sm text-white/45 mt-3">
-                      No policies match your search.
-                    </div>
-                  )}
-                </div>
-              </div>
+              <CalculatorContent
+                scenario={scenario} setScenario={setScenario}
+                fiscalColor={fiscalColor} fiscalLabel={fiscalLabel} totalFiscal={totalFiscal}
+                totalSecurity={totalSecurity} totalInequality={totalInequality} totalServices={totalServices}
+                isNuclearEnabled={isNuclearEnabled}
+                setAllPolicies={setAllPolicies} resetDefaults={resetDefaults}
+                searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+                filteredPolicies={filteredPolicies} enabled={enabled} togglePolicy={togglePolicy}
+                formatGBP={formatGBP}
+              />
             </div>
           </motion.div>
         )}
