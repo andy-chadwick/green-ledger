@@ -181,9 +181,10 @@ export default function Home() {
       <div className="py-4 px-4" style={{ background: 'rgba(212,160,23,0.08)', borderTop: '1px solid rgba(212,160,23,0.15)', borderBottom: '1px solid rgba(212,160,23,0.15)' }}>
         <div className="max-w-5xl mx-auto flex items-start gap-3">
           <Scale size={16} className="flex-shrink-0 mt-0.5" style={{ color: '#d4a017' }} />
-          <p className="text-sm text-white/75 leading-relaxed">
-            <span className="font-semibold text-white/70">This is a balanced analysis.</span> Every policy section includes both what the Green Party gets right and where the evidence raises concerns. We use data from the IFS, ONS, NIESR, SIPRI, NBER, and other credible sources. All sources are linked. We encourage you to read them.
-          </p>
+          <div className="text-sm text-white/75 leading-relaxed">
+            <p><span className="font-semibold text-white/70">This is a balanced analysis.</span> Every policy section includes both what the Green Party gets right and where the evidence raises concerns. We use data from the IFS, ONS, NIESR, SIPRI, NBER, and other credible sources. All sources are linked. We encourage you to read them.</p>
+            <p className="mt-2 text-white/60"><span className="font-semibold text-white/55">Objective vs subjective:</span> The case studies, statistics, and international evidence presented are objective, sourced from published data. The risk ratings (Critical, High, Medium, Low), impact scores, and verdicts are our subjective assessment based on that evidence. You may weigh the same data differently, and that is exactly the kind of informed disagreement this site is designed to encourage.</p>
+          </div>
         </div>
       </div>
 

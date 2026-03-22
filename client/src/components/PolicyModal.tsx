@@ -461,7 +461,8 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
 
                   {/* Risk Scores */}
                   <div className="mb-6">
-                    <h3 className="text-xs font-mono text-white/60 uppercase tracking-wider mb-4">Risk Score Breakdown</h3>
+                    <h3 className="text-xs font-mono text-white/60 uppercase tracking-wider mb-1">Risk Score Breakdown</h3>
+                    <p className="text-xs text-white/40 leading-relaxed mb-4">These scores are our subjective assessment based on the objective evidence presented in the Evidence tab. You may weigh the data differently.</p>
                     <RiskBar label="Fiscal Risk" value={policy.riskScore.fiscal} />
                     <RiskBar label="Economic Risk" value={policy.riskScore.economic} />
                     <RiskBar label="Social Risk" value={policy.riskScore.social} />
