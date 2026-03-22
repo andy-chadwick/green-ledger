@@ -58,9 +58,12 @@ function ImpactBar({ value, max = 5, label }: { value: number; max?: number; lab
 
 export default function CostCalculator() {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return true;
+    if (typeof window === 'undefined') return false;
+    // Default closed on mobile, respect persisted preference on desktop
+    const isMobile = window.innerWidth < 640;
+    if (isMobile) return false;
     const persisted = window.localStorage.getItem(CALC_OPEN_STORAGE_KEY);
-    return persisted ? persisted === '1' : true;
+    return persisted ? persisted === '1' : false;
   });
   const [scenario, setScenario] = useState<'best' | 'worst'>('worst');
   const [searchTerm, setSearchTerm] = useState('');
@@ -161,7 +164,7 @@ export default function CostCalculator() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{ background: CALC_PANEL_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW, overflow: 'hidden' }}
           >
-            <div className="max-w-5xl mx-auto px-4 py-5">
+            <div className="max-w-5xl mx-auto px-4 py-5 max-h-[60vh] sm:max-h-[70vh] overflow-y-auto">
               <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <p className="text-sm text-white/75">
                   <span className="font-semibold">How to use:</span> 1) Choose a scenario, 2) toggle policies on/off, 3) compare net annual fiscal and social impacts.
