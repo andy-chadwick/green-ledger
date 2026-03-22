@@ -45,7 +45,7 @@ export default function PolicyCard({ policy, onClick, index }: PolicyCardProps) 
 
   return (
     <motion.div
-      className="policy-card rounded-xl p-4 cursor-pointer group"
+      className="policy-card rounded-xl p-3 sm:p-4 cursor-pointer group"
       onClick={onClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

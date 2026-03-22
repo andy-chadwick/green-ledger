@@ -130,7 +130,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
           {/* Header */}
           <div className="flex-shrink-0 px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="flex items-start justify-between gap-4">
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <div
                   className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-xl sm:text-2xl flex-shrink-0"
                   style={{ background: `${categoryColor}20`, border: `1px solid ${categoryColor}40` }}
@@ -143,7 +143,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                       Policy {String(policy.number).padStart(2, '0')} — {policy.category}
                     </span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight" style={{ fontFamily: 'Libre Baskerville, serif' }}>
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white leading-tight" style={{ fontFamily: 'Libre Baskerville, serif' }}>
                     {policy.title}
                   </h2>
                   <div className="flex items-center gap-2 mt-2">
@@ -154,7 +154,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                       {riskLabels[policy.riskLevel]}
                     </span>
                     {policy.greenClaimAmount && (
-                      <span className="text-xs font-mono text-white/60">
+                      <span className="hidden sm:inline text-xs font-mono text-white/60">
                         Green claim: {policy.greenClaimAmount}
                       </span>
                     )}
@@ -192,14 +192,14 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all"
+                    className="flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold whitespace-nowrap transition-all"
                     style={{
                       background: isActive ? `${categoryColor}20` : 'transparent',
                       color: isActive ? categoryColor : 'rgba(255,255,255,0.6)',
                       border: isActive ? `1px solid ${categoryColor}40` : '1px solid transparent',
                     }}
                   >
-                    <Icon size={12} />
+                    <Icon size={12} className="hidden sm:block" />
                     {tab.label}
                   </button>
                 );
@@ -219,7 +219,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                   transition={{ duration: 0.2 }}
                 >
                   {/* Green Party Claim */}
-                  <div className="mb-6 p-4 rounded-lg" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
+                  <div className="mb-6 p-3 sm:p-4 rounded-lg" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
                     <div className="flex items-center gap-2 mb-2">
                       <span className="case-study-stamp">Green Party Position</span>
                     </div>
@@ -244,7 +244,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                     <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3">What the Green Party gets right</h3>
                     <div className="space-y-2">
                       {policy.positives.map((positive, i) => (
-                        <div key={i} className="flex items-start gap-3 p-3 rounded-lg they-say">
+                        <div key={i} className="flex items-start gap-3 p-2.5 sm:p-3 rounded-lg they-say">
                           <CheckCircle size={14} className="flex-shrink-0 mt-0.5" style={{ color: '#22c55e' }} />
                           <p className="text-white/75 text-sm leading-relaxed">{positive}</p>
                         </div>
@@ -279,9 +279,9 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                       const dirColor = stat.direction === 'positive' ? '#22c55e' : stat.direction === 'negative' ? '#ef4444' : '#d4a017';
                       const DirIcon = stat.direction === 'positive' ? ChevronUp : stat.direction === 'negative' ? ChevronDownIcon : null;
                       return (
-                        <div key={i} className="p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                        <div key={i} className="p-2.5 sm:p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                           <div className="flex items-center gap-1.5 mb-2">
-                            <span className="data-callout" style={{ fontSize: '1.55rem' }}>{stat.value}</span>
+                            <span className="data-callout" style={{ fontSize: 'clamp(1.1rem, 4vw, 1.55rem)' }}>{stat.value}</span>
                             {DirIcon && <DirIcon size={16} style={{ color: dirColor }} />}
                           </div>
                           <div className="text-sm text-white/78 leading-snug font-medium">{stat.label}</div>
@@ -301,7 +301,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                   {/* Chart */}
                   <div className="mb-6 p-4 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
                     <h3 className="text-xs font-mono text-white/60 uppercase tracking-wider mb-4">{policy.chartData.title}</h3>
-                    <ResponsiveContainer width="100%" height={260}>
+                    <ResponsiveContainer width="100%" height={200}>
                       <BarChart data={policy.chartData.data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
                         <XAxis
                           dataKey="label"
@@ -333,7 +333,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
 
                   {/* Case Studies */}
                   {policy.caseStudies.map((cs, i) => (
-                    <div key={i} className="mb-4 p-4 rounded-lg" style={{ background: 'rgba(212,160,23,0.06)', border: '1px solid rgba(212,160,23,0.2)' }}>
+                    <div key={i} className="mb-4 p-3 sm:p-4 rounded-lg" style={{ background: 'rgba(212,160,23,0.06)', border: '1px solid rgba(212,160,23,0.2)' }}>
                       <div className="flex items-center gap-2 mb-3">
                         <span className="text-2xl">{cs.flag}</span>
                         <div>
@@ -410,7 +410,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                   <div className="space-y-5">
                     {policy.debate.map((point, i) => (
                       <div key={i} className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div className="p-4 they-say">
+                        <div className="p-3 sm:p-4 they-say">
                           <div className="flex items-center gap-2 mb-2">
                             <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(34,197,94,0.2)', color: '#22c55e' }}>
                               G
@@ -419,7 +419,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                           </div>
                           <p className="text-white/75 text-sm leading-relaxed italic">"{point.theySay}"</p>
                         </div>
-                        <div className="p-4 we-say">
+                        <div className="p-3 sm:p-4 we-say">
                           <div className="flex items-center gap-2 mb-2">
                             <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(239,68,68,0.2)', color: '#ef4444' }}>
                               R
@@ -443,7 +443,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                   transition={{ duration: 0.2 }}
                 >
                   {/* Verdict text */}
-                  <div className="mb-6 p-5 rounded-lg" style={{ background: `${riskColor}10`, border: `1px solid ${riskColor}30` }}>
+                  <div className="mb-6 p-3 sm:p-5 rounded-lg" style={{ background: `${riskColor}10`, border: `1px solid ${riskColor}30` }}>
                     <div className="flex items-center gap-2 mb-3">
                       <Gavel size={14} style={{ color: riskColor }} />
                       <span className="text-xs font-mono uppercase tracking-wider" style={{ color: riskColor }}>Our Assessment</span>
@@ -475,8 +475,8 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                       const color = isNeutral ? 'rgba(255,255,255,0.3)' : isPositive ? '#22c55e' : '#ef4444';
                       const verdict = isNeutral ? 'No change' : isPositive ? 'Improves' : 'Worsens';
                       return (
-                        <div key={item.label} className="flex items-start gap-3 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                          <div className="flex flex-col items-center flex-shrink-0 w-14">
+                        <div key={item.label} className="flex items-start gap-3 p-2.5 sm:p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                          <div className="flex flex-col items-center flex-shrink-0 w-12 sm:w-14">
                             <div className="text-lg">{item.icon}</div>
                             <div className="font-mono font-bold text-base" style={{ color }}>
                               {item.value > 0 ? '+' : ''}{item.value}

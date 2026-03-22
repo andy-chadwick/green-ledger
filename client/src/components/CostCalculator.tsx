@@ -116,13 +116,13 @@ export default function CostCalculator() {
         style={{ background: CALC_BAR_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW }}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-3 py-2.5 sm:px-4 sm:py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Calculator size={16} style={{ color: '#d4a017' }} />
             <span className="hidden sm:inline text-sm font-tech text-white/75">
               Policy Cost Calculator
             </span>
-            <span className="text-xs font-tech px-2 py-0.5 rounded" style={{ background: 'rgba(212,160,23,0.15)', color: '#d4a017' }}>
+            <span className="hidden sm:inline-flex text-xs font-tech px-2 py-0.5 rounded" style={{ background: 'rgba(212,160,23,0.15)', color: '#d4a017' }}>
               {activePolicies.length}/{policies.length} policies active
             </span>
             {!isOpen && (

@@ -92,7 +92,7 @@ export default function Home() {
           className="relative z-10 text-center px-4 max-w-5xl mx-auto"
           style={{ opacity: heroOpacity }}
         >
-          <div className="rounded-2xl px-5 py-6 sm:px-8 sm:py-9 border border-white/10 bg-black/25 backdrop-blur-[2px]">
+          <div className="rounded-2xl px-4 py-5 sm:px-8 sm:py-9 border border-white/10 bg-black/25 backdrop-blur-[2px]">
             {/* Eyebrow */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -101,7 +101,7 @@ export default function Home() {
               className="flex items-center justify-center gap-3 mb-6"
             >
               <div className="h-px w-12" style={{ background: 'linear-gradient(90deg, transparent, #d4a017)' }} />
-              <span className="text-base font-tech text-white/75">
+              <span className="text-xs sm:text-base font-tech text-white/75">
                 Evidence-Based Policy Analysis
               </span>
               <div className="h-px w-12" style={{ background: 'linear-gradient(90deg, #d4a017, transparent)' }} />
@@ -124,7 +124,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl sm:text-2xl text-white/85 mb-3 leading-relaxed max-w-3xl mx-auto"
+              className="text-base sm:text-xl md:text-2xl text-white/85 mb-3 leading-relaxed max-w-3xl mx-auto"
             >
               Green Party Manifesto Analysed: 14 Policies Fact-Checked
             </motion.h1>
@@ -132,7 +132,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-base sm:text-lg text-white/70 mb-10 max-w-2xl mx-auto leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-white/70 mb-6 sm:mb-10 max-w-2xl mx-auto leading-relaxed"
             >
               What they promise, what the international evidence says, and what it might cost Britain.
               A fair, data-driven analysis of both benefits and trade-offs.
@@ -143,7 +143,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-wrap items-center justify-center gap-4 sm:gap-12 mb-10"
+              className="flex flex-wrap items-center justify-center gap-4 sm:gap-12 mb-6 sm:mb-10"
             >
               <StatCard value="14" label="Policies Analysed" icon="📋" />
               <div className="hidden sm:block h-12 w-px bg-white/20" />
@@ -158,7 +158,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               onClick={scrollToGrid}
-              className="flex items-center gap-2 mx-auto px-7 py-3.5 rounded-lg font-semibold text-base transition-all hover:scale-105"
+              className="flex items-center gap-2 mx-auto px-5 py-3 sm:px-7 sm:py-3.5 rounded-lg font-semibold text-sm sm:text-base transition-all hover:scale-105"
               style={{ background: '#d4a017', color: '#0c0e12' }}
             >
               Explore the Policies
@@ -188,7 +188,7 @@ export default function Home() {
       </div>
 
       {/* ── OVERVIEW CARDS ── */}
-      <section className="py-12 px-4">
+      <section className="py-8 sm:py-12 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
@@ -244,8 +244,8 @@ export default function Home() {
                 style={{ borderColor: 'rgba(212,160,23,0.3)' }}
               />
               <div className="flex-1 min-w-0">
-                <span className="text-sm font-semibold text-white">Andy Chadwick</span>
-                <span className="text-sm text-white/50 ml-2">About me and why I built this</span>
+                <div className="text-sm font-semibold text-white">Andy Chadwick</div>
+                <div className="text-xs sm:text-sm text-white/50">About me and why I built this</div>
               </div>
               <ChevronDown
                 size={16}
@@ -285,7 +285,7 @@ export default function Home() {
           {/* Section header */}
           <div className="mb-8">
             <div className="gold-rule mb-4 w-16" />
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
               Green Party Policy Review
             </h2>
             <p className="text-base text-white/70">
