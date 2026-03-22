@@ -117,10 +117,10 @@ export default function CostCalculator() {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="max-w-5xl mx-auto px-3 py-2.5 sm:px-4 sm:py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Calculator size={16} style={{ color: '#d4a017' }} />
-            <span className="hidden sm:inline text-sm font-tech text-white/75">
-              Policy Cost Calculator
+            <span className="text-xs sm:text-sm font-tech text-white/75">
+              Calculator
             </span>
             <span className="hidden sm:inline-flex text-xs font-tech px-2 py-0.5 rounded" style={{ background: 'rgba(212,160,23,0.15)', color: '#d4a017' }}>
               {activePolicies.length}/{policies.length} policies active
@@ -162,9 +162,17 @@ export default function CostCalculator() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            style={{ background: CALC_PANEL_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW, overflow: 'hidden' }}
+            className="fixed sm:relative inset-0 sm:inset-auto bottom-0 left-0 right-0 z-40 sm:z-auto overflow-y-auto sm:overflow-visible"
+            style={{ background: CALC_PANEL_BG, borderTop: `1px solid ${CALC_BORDER}`, boxShadow: CALC_TOP_GLOW }}
           >
-            <div className="max-w-5xl mx-auto px-4 py-5 max-h-[60vh] sm:max-h-none overflow-y-auto sm:overflow-y-visible">
+            {/* Mobile close bar */}
+            <div className="sm:hidden sticky top-0 z-10 flex items-center justify-between px-4 py-3" style={{ background: CALC_PANEL_BG, borderBottom: `1px solid ${CALC_BORDER}` }}>
+              <span className="text-sm font-tech text-white/75">Policy Cost Calculator</span>
+              <button onClick={() => setIsOpen(false)} className="text-xs font-tech px-3 py-1 rounded" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)' }}>
+                Close
+              </button>
+            </div>
+            <div className="max-w-5xl mx-auto px-4 py-5">
               <div className="mb-4 p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <p className="text-sm text-white/75">
                   <span className="font-semibold">How to use:</span> 1) Choose a scenario, 2) toggle policies on/off, 3) compare net annual fiscal and social impacts.
@@ -269,7 +277,7 @@ export default function CostCalculator() {
                   <div className="text-xs text-white/60 mb-2">
                     Showing {filteredPolicies.length} of {policies.length} policies
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:max-h-64 sm:overflow-y-auto sm:pr-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:max-h-64 sm:overflow-y-auto sm:pr-1 pb-20 sm:pb-0">
                     {filteredPolicies.map((policy) => {
                       const isOn = enabled[policy.id];
                       const fiscalVal = scenario === 'best' ? policy.bestCaseGBP : policy.worstCaseGBP;

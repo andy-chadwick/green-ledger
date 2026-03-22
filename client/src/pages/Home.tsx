@@ -36,8 +36,8 @@ export default function Home() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 400], [1, 1.05]);
+  const heroOpacity = useTransform(scrollY, [100, 600], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 600], [1, 1.05]);
 
   // Auto-open policy from URL params (e.g. ?policy=wealth-tax)
   useEffect(() => {
