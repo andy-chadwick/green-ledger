@@ -128,18 +128,18 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
           transition={{ type: 'spring', damping: 30, stiffness: 300 }}
         >
           {/* Header */}
-          <div className="flex-shrink-0 px-6 pt-6 pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex-shrink-0 px-4 pt-4 pb-3 sm:px-6 sm:pt-6 sm:pb-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-4">
                 <div
-                  className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl flex-shrink-0"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-xl sm:text-2xl flex-shrink-0"
                   style={{ background: `${categoryColor}20`, border: `1px solid ${categoryColor}40` }}
                 >
                   {policy.icon}
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-mono uppercase tracking-widest" style={{ color: categoryColor }}>
+                    <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest" style={{ color: categoryColor }}>
                       Policy {String(policy.number).padStart(2, '0')} — {policy.category}
                     </span>
                   </div>
@@ -208,7 +208,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
           </div>
 
           {/* Content */}
-          <div className="flex-1 overflow-y-auto px-6 py-5">
+          <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
             <AnimatePresence mode="wait">
               {activeTab === 'promise' && (
                 <motion.div
@@ -274,7 +274,7 @@ export default function PolicyModal({ policy, onClose }: PolicyModalProps) {
                       These are real-world outcomes from comparable countries or official UK fiscal estimates.
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                     {policy.keyStats.map((stat, i) => {
                       const dirColor = stat.direction === 'positive' ? '#22c55e' : stat.direction === 'negative' ? '#ef4444' : '#d4a017';
                       const DirIcon = stat.direction === 'positive' ? ChevronUp : stat.direction === 'negative' ? ChevronDownIcon : null;

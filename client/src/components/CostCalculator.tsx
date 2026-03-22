@@ -116,24 +116,24 @@ export default function CostCalculator() {
         <div className="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Calculator size={16} style={{ color: '#d4a017' }} />
-            <span className="text-sm font-tech text-white/75">
+            <span className="hidden sm:inline text-sm font-tech text-white/75">
               Policy Cost Calculator
             </span>
             <span className="text-xs font-tech px-2 py-0.5 rounded" style={{ background: 'rgba(212,160,23,0.15)', color: '#d4a017' }}>
               {activePolicies.length}/{policies.length} policies active
             </span>
             {!isOpen && (
-              <span className="text-xs text-white/60">Tap to configure</span>
+              <span className="hidden sm:inline text-xs text-white/60">Tap to configure</span>
             )}
           </div>
 
           <div className="flex items-center gap-4">
             {/* Fiscal total */}
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/60 font-mono">
+              <span className="hidden sm:inline text-xs text-white/60 font-mono">
                 {scenario === 'best' ? 'Best' : 'Worst'} case:
               </span>
-              <span className="text-base font-mono font-bold" style={{ color: fiscalColor }}>
+              <span className="text-sm sm:text-base font-mono font-bold" style={{ color: fiscalColor }}>
                 {totalFiscal >= 0 ? '+' : ''}{formatGBP(totalFiscal)}
               </span>
             </div>
@@ -142,7 +142,7 @@ export default function CostCalculator() {
             {!isNuclearEnabled && (
               <div className="flex items-center gap-1 text-xs font-mono" style={{ color: '#ef4444' }}>
                 <AlertTriangle size={12} />
-                <span>Trident off</span>
+                <span className="hidden sm:inline">Trident off</span>
               </div>
             )}
 

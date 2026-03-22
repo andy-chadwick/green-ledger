@@ -69,7 +69,7 @@ export default function PolicyCard({ policy, onClick, index }: PolicyCardProps) 
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-bold text-white mb-1.5 leading-tight group-hover:text-white/90 transition-colors">
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5 leading-tight group-hover:text-white/90 transition-colors">
         {policy.title}
       </h3>
 

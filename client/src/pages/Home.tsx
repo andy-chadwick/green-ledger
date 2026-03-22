@@ -112,7 +112,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight"
               style={{ textShadow: '0 2px 20px rgba(0,0,0,0.5)' }}
               aria-hidden="true"
             >
@@ -143,12 +143,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex items-center justify-center gap-7 sm:gap-12 mb-10"
+              className="flex flex-wrap items-center justify-center gap-4 sm:gap-12 mb-10"
             >
               <StatCard value="14" label="Policies Analysed" icon="📋" />
-              <div className="h-12 w-px bg-white/20" />
+              <div className="hidden sm:block h-12 w-px bg-white/20" />
               <StatCard value={`${criticalCount + highCount}`} label="High/Critical Risk" icon="⚠️" />
-              <div className="h-12 w-px bg-white/20" />
+              <div className="hidden sm:block h-12 w-px bg-white/20" />
               <StatCard value={`£${Math.abs(worstCaseTotal / 1_000_000_000).toFixed(0)}bn`} label="Worst Case Cost" icon="💸" />
             </motion.div>
 
@@ -294,7 +294,7 @@ export default function Home() {
           </div>
 
           {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2 mb-6">
             {/* Category filter */}
             <div className="flex flex-wrap gap-1.5">
               {CATEGORIES.map(cat => (
@@ -320,7 +320,7 @@ export default function Home() {
             </div>
 
             {/* Risk filter */}
-            <div className="flex flex-wrap gap-1.5 ml-auto">
+            <div className="flex flex-wrap gap-1.5">
               {RISK_FILTERS.map(risk => (
                 <button
                   key={risk}
